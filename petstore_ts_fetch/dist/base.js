@@ -47,7 +47,6 @@ class BaseAPI {
     }
 }
 exports.BaseAPI = BaseAPI;
-;
 /**
  *
  * @export

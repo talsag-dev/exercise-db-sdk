@@ -12,15 +12,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
@@ -33,10 +24,10 @@ const common_1 = require("./common");
 // @ts-ignore
 const base_1 = require("./base");
 exports.NotFoundErrorCodeEnum = {
-    NotFound: 'NOT_FOUND'
+    NotFound: "NOT_FOUND",
 };
 exports.NotFoundErrorMessageEnum = {
-    ExerciseNotFound: 'Exercise not found'
+    ExerciseNotFound: "Exercise not found",
 };
 /**
  * ExercisesApi - axios parameter creator
@@ -53,7 +44,7 @@ const ExercisesApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercises: (offset_1, limit_1, sortMethod_1, sortOrder_1, ...args_1) => __awaiter(this, [offset_1, limit_1, sortMethod_1, sortOrder_1, ...args_1], void 0, function* (offset, limit, sortMethod, sortOrder, options = {}) {
+        getExercises: async (offset, limit, sortMethod, sortOrder, options = {}) => {
             const localVarPath = `/exercises`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
@@ -61,29 +52,37 @@ const ExercisesApiAxiosParamCreator = function (configuration) {
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = {
+                method: "GET",
+                ...baseOptions,
+                ...options,
+            };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             if (offset !== undefined) {
-                localVarQueryParameter['offset'] = offset;
+                localVarQueryParameter["offset"] = offset;
             }
             if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
+                localVarQueryParameter["limit"] = limit;
             }
             if (sortMethod !== undefined) {
-                localVarQueryParameter['sortMethod'] = sortMethod;
+                localVarQueryParameter["sortMethod"] = sortMethod;
             }
             if (sortOrder !== undefined) {
-                localVarQueryParameter['sortOrder'] = sortOrder;
+                localVarQueryParameter["sortOrder"] = sortOrder;
             }
             (0, common_1.setSearchParams)(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             return {
                 url: (0, common_1.toPathString)(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          * Retrieve a list of exercises by body part
          * @param {'back' | 'cardio' | 'chest' | 'lower arms' | 'lower legs' | 'neck' | 'shoulders' | 'upper arms' | 'upper legs' | 'waist'} bodyPart Body part
@@ -94,46 +93,53 @@ const ExercisesApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercisesBodyPartByBodyPart: (bodyPart_1, offset_1, limit_1, sortMethod_1, sortOrder_1, ...args_1) => __awaiter(this, [bodyPart_1, offset_1, limit_1, sortMethod_1, sortOrder_1, ...args_1], void 0, function* (bodyPart, offset, limit, sortMethod, sortOrder, options = {}) {
+        getExercisesBodyPartByBodyPart: async (bodyPart, offset, limit, sortMethod, sortOrder, options = {}) => {
             // verify required parameter 'bodyPart' is not null or undefined
-            (0, common_1.assertParamExists)('getExercisesBodyPartByBodyPart', 'bodyPart', bodyPart);
-            const localVarPath = `/exercises/bodyPart/{bodyPart}`
-                .replace(`{${"bodyPart"}}`, encodeURIComponent(String(bodyPart)));
+            (0, common_1.assertParamExists)("getExercisesBodyPartByBodyPart", "bodyPart", bodyPart);
+            const localVarPath = `/exercises/bodyPart/{bodyPart}`.replace(`{${"bodyPart"}}`, encodeURIComponent(String(bodyPart)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = {
+                method: "GET",
+                ...baseOptions,
+                ...options,
+            };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             if (offset !== undefined) {
-                localVarQueryParameter['offset'] = offset;
+                localVarQueryParameter["offset"] = offset;
             }
             if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
+                localVarQueryParameter["limit"] = limit;
             }
             if (sortMethod !== undefined) {
-                localVarQueryParameter['sortMethod'] = sortMethod;
+                localVarQueryParameter["sortMethod"] = sortMethod;
             }
             if (sortOrder !== undefined) {
-                localVarQueryParameter['sortOrder'] = sortOrder;
+                localVarQueryParameter["sortOrder"] = sortOrder;
             }
             (0, common_1.setSearchParams)(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             return {
                 url: (0, common_1.toPathString)(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          * Get list of available body parts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercisesBodyPartList: (...args_1) => __awaiter(this, [...args_1], void 0, function* (options = {}) {
+        getExercisesBodyPartList: async (options = {}) => {
             const localVarPath = `/exercises/bodyPartList`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
@@ -141,17 +147,25 @@ const ExercisesApiAxiosParamCreator = function (configuration) {
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = {
+                method: "GET",
+                ...baseOptions,
+                ...options,
+            };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             (0, common_1.setSearchParams)(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             return {
                 url: (0, common_1.toPathString)(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          * Retrieve a list of exercises by equipment
          * @param {'assisted' | 'band' | 'barbell' | 'body weight' | 'bosu ball' | 'cable' | 'dumbbell' | 'elliptical machine' | 'ez barbell' | 'hammer' | 'kettlebell' | 'leverage machine' | 'medicine ball' | 'olympic barbell' | 'resistance band' | 'roller' | 'rope' | 'skierg machine' | 'sled machine' | 'smith machine' | 'stability ball' | 'stationary bike' | 'stepmill machine' | 'tire' | 'trap bar' | 'upper body ergometer' | 'weighted' | 'wheel roller'} equipment Equipment type
@@ -162,46 +176,53 @@ const ExercisesApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercisesEquipmentByEquipment: (equipment_1, offset_1, limit_1, sortMethod_1, sortOrder_1, ...args_1) => __awaiter(this, [equipment_1, offset_1, limit_1, sortMethod_1, sortOrder_1, ...args_1], void 0, function* (equipment, offset, limit, sortMethod, sortOrder, options = {}) {
+        getExercisesEquipmentByEquipment: async (equipment, offset, limit, sortMethod, sortOrder, options = {}) => {
             // verify required parameter 'equipment' is not null or undefined
-            (0, common_1.assertParamExists)('getExercisesEquipmentByEquipment', 'equipment', equipment);
-            const localVarPath = `/exercises/equipment/{equipment}`
-                .replace(`{${"equipment"}}`, encodeURIComponent(String(equipment)));
+            (0, common_1.assertParamExists)("getExercisesEquipmentByEquipment", "equipment", equipment);
+            const localVarPath = `/exercises/equipment/{equipment}`.replace(`{${"equipment"}}`, encodeURIComponent(String(equipment)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = {
+                method: "GET",
+                ...baseOptions,
+                ...options,
+            };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             if (offset !== undefined) {
-                localVarQueryParameter['offset'] = offset;
+                localVarQueryParameter["offset"] = offset;
             }
             if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
+                localVarQueryParameter["limit"] = limit;
             }
             if (sortMethod !== undefined) {
-                localVarQueryParameter['sortMethod'] = sortMethod;
+                localVarQueryParameter["sortMethod"] = sortMethod;
             }
             if (sortOrder !== undefined) {
-                localVarQueryParameter['sortOrder'] = sortOrder;
+                localVarQueryParameter["sortOrder"] = sortOrder;
             }
             (0, common_1.setSearchParams)(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             return {
                 url: (0, common_1.toPathString)(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          * Get list of available equipment
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercisesEquipmentList: (...args_1) => __awaiter(this, [...args_1], void 0, function* (options = {}) {
+        getExercisesEquipmentList: async (options = {}) => {
             const localVarPath = `/exercises/equipmentList`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
@@ -209,45 +230,60 @@ const ExercisesApiAxiosParamCreator = function (configuration) {
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = {
+                method: "GET",
+                ...baseOptions,
+                ...options,
+            };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             (0, common_1.setSearchParams)(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             return {
                 url: (0, common_1.toPathString)(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          * Get a single exercise by its ID
          * @param {string} id
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercisesExerciseById: (id_1, ...args_1) => __awaiter(this, [id_1, ...args_1], void 0, function* (id, options = {}) {
+        getExercisesExerciseById: async (id, options = {}) => {
             // verify required parameter 'id' is not null or undefined
-            (0, common_1.assertParamExists)('getExercisesExerciseById', 'id', id);
-            const localVarPath = `/exercises/exercise/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            (0, common_1.assertParamExists)("getExercisesExerciseById", "id", id);
+            const localVarPath = `/exercises/exercise/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = {
+                method: "GET",
+                ...baseOptions,
+                ...options,
+            };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             (0, common_1.setSearchParams)(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             return {
                 url: (0, common_1.toPathString)(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          * Get list of exercises by name
          * @param {string} name
@@ -258,40 +294,47 @@ const ExercisesApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercisesNameByName: (name_1, offset_1, limit_1, sortMethod_1, sortOrder_1, ...args_1) => __awaiter(this, [name_1, offset_1, limit_1, sortMethod_1, sortOrder_1, ...args_1], void 0, function* (name, offset, limit, sortMethod, sortOrder, options = {}) {
+        getExercisesNameByName: async (name, offset, limit, sortMethod, sortOrder, options = {}) => {
             // verify required parameter 'name' is not null or undefined
-            (0, common_1.assertParamExists)('getExercisesNameByName', 'name', name);
-            const localVarPath = `/exercises/name/{name}`
-                .replace(`{${"name"}}`, encodeURIComponent(String(name)));
+            (0, common_1.assertParamExists)("getExercisesNameByName", "name", name);
+            const localVarPath = `/exercises/name/{name}`.replace(`{${"name"}}`, encodeURIComponent(String(name)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = {
+                method: "GET",
+                ...baseOptions,
+                ...options,
+            };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             if (offset !== undefined) {
-                localVarQueryParameter['offset'] = offset;
+                localVarQueryParameter["offset"] = offset;
             }
             if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
+                localVarQueryParameter["limit"] = limit;
             }
             if (sortMethod !== undefined) {
-                localVarQueryParameter['sortMethod'] = sortMethod;
+                localVarQueryParameter["sortMethod"] = sortMethod;
             }
             if (sortOrder !== undefined) {
-                localVarQueryParameter['sortOrder'] = sortOrder;
+                localVarQueryParameter["sortOrder"] = sortOrder;
             }
             (0, common_1.setSearchParams)(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             return {
                 url: (0, common_1.toPathString)(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          * Get list of exercises by target muscle
          * @param {'abductors' | 'abs' | 'adductors' | 'biceps' | 'calves' | 'cardiovascular system' | 'delts' | 'forearms' | 'glutes' | 'hamstrings' | 'lats' | 'levator scapulae' | 'pectorals' | 'quads' | 'serratus anterior' | 'spine' | 'traps' | 'triceps' | 'upper back'} target Target muscle
@@ -302,46 +345,53 @@ const ExercisesApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercisesTargetByTarget: (target_1, offset_1, limit_1, sortMethod_1, sortOrder_1, ...args_1) => __awaiter(this, [target_1, offset_1, limit_1, sortMethod_1, sortOrder_1, ...args_1], void 0, function* (target, offset, limit, sortMethod, sortOrder, options = {}) {
+        getExercisesTargetByTarget: async (target, offset, limit, sortMethod, sortOrder, options = {}) => {
             // verify required parameter 'target' is not null or undefined
-            (0, common_1.assertParamExists)('getExercisesTargetByTarget', 'target', target);
-            const localVarPath = `/exercises/target/{target}`
-                .replace(`{${"target"}}`, encodeURIComponent(String(target)));
+            (0, common_1.assertParamExists)("getExercisesTargetByTarget", "target", target);
+            const localVarPath = `/exercises/target/{target}`.replace(`{${"target"}}`, encodeURIComponent(String(target)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = {
+                method: "GET",
+                ...baseOptions,
+                ...options,
+            };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             if (offset !== undefined) {
-                localVarQueryParameter['offset'] = offset;
+                localVarQueryParameter["offset"] = offset;
             }
             if (limit !== undefined) {
-                localVarQueryParameter['limit'] = limit;
+                localVarQueryParameter["limit"] = limit;
             }
             if (sortMethod !== undefined) {
-                localVarQueryParameter['sortMethod'] = sortMethod;
+                localVarQueryParameter["sortMethod"] = sortMethod;
             }
             if (sortOrder !== undefined) {
-                localVarQueryParameter['sortOrder'] = sortOrder;
+                localVarQueryParameter["sortOrder"] = sortOrder;
             }
             (0, common_1.setSearchParams)(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             return {
                 url: (0, common_1.toPathString)(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          * Get list of available target muscles
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercisesTargetList: (...args_1) => __awaiter(this, [...args_1], void 0, function* (options = {}) {
+        getExercisesTargetList: async (options = {}) => {
             const localVarPath = `/exercises/targetList`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
@@ -349,17 +399,25 @@ const ExercisesApiAxiosParamCreator = function (configuration) {
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = {
+                method: "GET",
+                ...baseOptions,
+                ...options,
+            };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             (0, common_1.setSearchParams)(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             return {
                 url: (0, common_1.toPathString)(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
     };
 };
 exports.ExercisesApiAxiosParamCreator = ExercisesApiAxiosParamCreator;
@@ -379,11 +437,9 @@ const ExercisesApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercises(offset, limit, sortMethod, sortOrder, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.getExercises(offset, limit, sortMethod, sortOrder, options);
-                return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async getExercises(offset, limit, sortMethod, sortOrder, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExercises(offset, limit, sortMethod, sortOrder, options);
+            return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
         },
         /**
          * Retrieve a list of exercises by body part
@@ -395,22 +451,18 @@ const ExercisesApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercisesBodyPartByBodyPart(bodyPart, offset, limit, sortMethod, sortOrder, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.getExercisesBodyPartByBodyPart(bodyPart, offset, limit, sortMethod, sortOrder, options);
-                return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async getExercisesBodyPartByBodyPart(bodyPart, offset, limit, sortMethod, sortOrder, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExercisesBodyPartByBodyPart(bodyPart, offset, limit, sortMethod, sortOrder, options);
+            return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
         },
         /**
          * Get list of available body parts
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercisesBodyPartList(options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.getExercisesBodyPartList(options);
-                return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async getExercisesBodyPartList(options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExercisesBodyPartList(options);
+            return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
         },
         /**
          * Retrieve a list of exercises by equipment
@@ -422,22 +474,18 @@ const ExercisesApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercisesEquipmentByEquipment(equipment, offset, limit, sortMethod, sortOrder, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.getExercisesEquipmentByEquipment(equipment, offset, limit, sortMethod, sortOrder, options);
-                return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async getExercisesEquipmentByEquipment(equipment, offset, limit, sortMethod, sortOrder, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExercisesEquipmentByEquipment(equipment, offset, limit, sortMethod, sortOrder, options);
+            return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
         },
         /**
          * Get list of available equipment
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercisesEquipmentList(options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.getExercisesEquipmentList(options);
-                return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async getExercisesEquipmentList(options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExercisesEquipmentList(options);
+            return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
         },
         /**
          * Get a single exercise by its ID
@@ -445,11 +493,9 @@ const ExercisesApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercisesExerciseById(id, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.getExercisesExerciseById(id, options);
-                return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async getExercisesExerciseById(id, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExercisesExerciseById(id, options);
+            return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
         },
         /**
          * Get list of exercises by name
@@ -461,11 +507,9 @@ const ExercisesApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercisesNameByName(name, offset, limit, sortMethod, sortOrder, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.getExercisesNameByName(name, offset, limit, sortMethod, sortOrder, options);
-                return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async getExercisesNameByName(name, offset, limit, sortMethod, sortOrder, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExercisesNameByName(name, offset, limit, sortMethod, sortOrder, options);
+            return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
         },
         /**
          * Get list of exercises by target muscle
@@ -477,22 +521,18 @@ const ExercisesApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercisesTargetByTarget(target, offset, limit, sortMethod, sortOrder, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.getExercisesTargetByTarget(target, offset, limit, sortMethod, sortOrder, options);
-                return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async getExercisesTargetByTarget(target, offset, limit, sortMethod, sortOrder, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExercisesTargetByTarget(target, offset, limit, sortMethod, sortOrder, options);
+            return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
         },
         /**
          * Get list of available target muscles
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getExercisesTargetList(options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.getExercisesTargetList(options);
-                return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async getExercisesTargetList(options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getExercisesTargetList(options);
+            return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
         },
     };
 };
@@ -514,7 +554,9 @@ const ExercisesApiFactory = function (configuration, basePath, axios) {
          * @throws {RequiredError}
          */
         getExercises(offset, limit, sortMethod, sortOrder, options) {
-            return localVarFp.getExercises(offset, limit, sortMethod, sortOrder, options).then((request) => request(axios, basePath));
+            return localVarFp
+                .getExercises(offset, limit, sortMethod, sortOrder, options)
+                .then((request) => request(axios, basePath));
         },
         /**
          * Retrieve a list of exercises by body part
@@ -527,7 +569,9 @@ const ExercisesApiFactory = function (configuration, basePath, axios) {
          * @throws {RequiredError}
          */
         getExercisesBodyPartByBodyPart(bodyPart, offset, limit, sortMethod, sortOrder, options) {
-            return localVarFp.getExercisesBodyPartByBodyPart(bodyPart, offset, limit, sortMethod, sortOrder, options).then((request) => request(axios, basePath));
+            return localVarFp
+                .getExercisesBodyPartByBodyPart(bodyPart, offset, limit, sortMethod, sortOrder, options)
+                .then((request) => request(axios, basePath));
         },
         /**
          * Get list of available body parts
@@ -535,7 +579,9 @@ const ExercisesApiFactory = function (configuration, basePath, axios) {
          * @throws {RequiredError}
          */
         getExercisesBodyPartList(options) {
-            return localVarFp.getExercisesBodyPartList(options).then((request) => request(axios, basePath));
+            return localVarFp
+                .getExercisesBodyPartList(options)
+                .then((request) => request(axios, basePath));
         },
         /**
          * Retrieve a list of exercises by equipment
@@ -548,7 +594,9 @@ const ExercisesApiFactory = function (configuration, basePath, axios) {
          * @throws {RequiredError}
          */
         getExercisesEquipmentByEquipment(equipment, offset, limit, sortMethod, sortOrder, options) {
-            return localVarFp.getExercisesEquipmentByEquipment(equipment, offset, limit, sortMethod, sortOrder, options).then((request) => request(axios, basePath));
+            return localVarFp
+                .getExercisesEquipmentByEquipment(equipment, offset, limit, sortMethod, sortOrder, options)
+                .then((request) => request(axios, basePath));
         },
         /**
          * Get list of available equipment
@@ -556,7 +604,9 @@ const ExercisesApiFactory = function (configuration, basePath, axios) {
          * @throws {RequiredError}
          */
         getExercisesEquipmentList(options) {
-            return localVarFp.getExercisesEquipmentList(options).then((request) => request(axios, basePath));
+            return localVarFp
+                .getExercisesEquipmentList(options)
+                .then((request) => request(axios, basePath));
         },
         /**
          * Get a single exercise by its ID
@@ -565,7 +615,9 @@ const ExercisesApiFactory = function (configuration, basePath, axios) {
          * @throws {RequiredError}
          */
         getExercisesExerciseById(id, options) {
-            return localVarFp.getExercisesExerciseById(id, options).then((request) => request(axios, basePath));
+            return localVarFp
+                .getExercisesExerciseById(id, options)
+                .then((request) => request(axios, basePath));
         },
         /**
          * Get list of exercises by name
@@ -578,7 +630,9 @@ const ExercisesApiFactory = function (configuration, basePath, axios) {
          * @throws {RequiredError}
          */
         getExercisesNameByName(name, offset, limit, sortMethod, sortOrder, options) {
-            return localVarFp.getExercisesNameByName(name, offset, limit, sortMethod, sortOrder, options).then((request) => request(axios, basePath));
+            return localVarFp
+                .getExercisesNameByName(name, offset, limit, sortMethod, sortOrder, options)
+                .then((request) => request(axios, basePath));
         },
         /**
          * Get list of exercises by target muscle
@@ -591,7 +645,9 @@ const ExercisesApiFactory = function (configuration, basePath, axios) {
          * @throws {RequiredError}
          */
         getExercisesTargetByTarget(target, offset, limit, sortMethod, sortOrder, options) {
-            return localVarFp.getExercisesTargetByTarget(target, offset, limit, sortMethod, sortOrder, options).then((request) => request(axios, basePath));
+            return localVarFp
+                .getExercisesTargetByTarget(target, offset, limit, sortMethod, sortOrder, options)
+                .then((request) => request(axios, basePath));
         },
         /**
          * Get list of available target muscles
@@ -599,7 +655,9 @@ const ExercisesApiFactory = function (configuration, basePath, axios) {
          * @throws {RequiredError}
          */
         getExercisesTargetList(options) {
-            return localVarFp.getExercisesTargetList(options).then((request) => request(axios, basePath));
+            return localVarFp
+                .getExercisesTargetList(options)
+                .then((request) => request(axios, basePath));
         },
     };
 };
@@ -622,7 +680,9 @@ class ExercisesApi extends base_1.BaseAPI {
      * @memberof ExercisesApi
      */
     getExercises(offset, limit, sortMethod, sortOrder, options) {
-        return (0, exports.ExercisesApiFp)(this.configuration).getExercises(offset, limit, sortMethod, sortOrder, options).then((request) => request(this.axios, this.basePath));
+        return (0, exports.ExercisesApiFp)(this.configuration)
+            .getExercises(offset, limit, sortMethod, sortOrder, options)
+            .then((request) => request(this.axios, this.basePath));
     }
     /**
      * Retrieve a list of exercises by body part
@@ -636,7 +696,9 @@ class ExercisesApi extends base_1.BaseAPI {
      * @memberof ExercisesApi
      */
     getExercisesBodyPartByBodyPart(bodyPart, offset, limit, sortMethod, sortOrder, options) {
-        return (0, exports.ExercisesApiFp)(this.configuration).getExercisesBodyPartByBodyPart(bodyPart, offset, limit, sortMethod, sortOrder, options).then((request) => request(this.axios, this.basePath));
+        return (0, exports.ExercisesApiFp)(this.configuration)
+            .getExercisesBodyPartByBodyPart(bodyPart, offset, limit, sortMethod, sortOrder, options)
+            .then((request) => request(this.axios, this.basePath));
     }
     /**
      * Get list of available body parts
@@ -645,7 +707,9 @@ class ExercisesApi extends base_1.BaseAPI {
      * @memberof ExercisesApi
      */
     getExercisesBodyPartList(options) {
-        return (0, exports.ExercisesApiFp)(this.configuration).getExercisesBodyPartList(options).then((request) => request(this.axios, this.basePath));
+        return (0, exports.ExercisesApiFp)(this.configuration)
+            .getExercisesBodyPartList(options)
+            .then((request) => request(this.axios, this.basePath));
     }
     /**
      * Retrieve a list of exercises by equipment
@@ -659,7 +723,9 @@ class ExercisesApi extends base_1.BaseAPI {
      * @memberof ExercisesApi
      */
     getExercisesEquipmentByEquipment(equipment, offset, limit, sortMethod, sortOrder, options) {
-        return (0, exports.ExercisesApiFp)(this.configuration).getExercisesEquipmentByEquipment(equipment, offset, limit, sortMethod, sortOrder, options).then((request) => request(this.axios, this.basePath));
+        return (0, exports.ExercisesApiFp)(this.configuration)
+            .getExercisesEquipmentByEquipment(equipment, offset, limit, sortMethod, sortOrder, options)
+            .then((request) => request(this.axios, this.basePath));
     }
     /**
      * Get list of available equipment
@@ -668,7 +734,9 @@ class ExercisesApi extends base_1.BaseAPI {
      * @memberof ExercisesApi
      */
     getExercisesEquipmentList(options) {
-        return (0, exports.ExercisesApiFp)(this.configuration).getExercisesEquipmentList(options).then((request) => request(this.axios, this.basePath));
+        return (0, exports.ExercisesApiFp)(this.configuration)
+            .getExercisesEquipmentList(options)
+            .then((request) => request(this.axios, this.basePath));
     }
     /**
      * Get a single exercise by its ID
@@ -678,7 +746,9 @@ class ExercisesApi extends base_1.BaseAPI {
      * @memberof ExercisesApi
      */
     getExercisesExerciseById(id, options) {
-        return (0, exports.ExercisesApiFp)(this.configuration).getExercisesExerciseById(id, options).then((request) => request(this.axios, this.basePath));
+        return (0, exports.ExercisesApiFp)(this.configuration)
+            .getExercisesExerciseById(id, options)
+            .then((request) => request(this.axios, this.basePath));
     }
     /**
      * Get list of exercises by name
@@ -692,7 +762,9 @@ class ExercisesApi extends base_1.BaseAPI {
      * @memberof ExercisesApi
      */
     getExercisesNameByName(name, offset, limit, sortMethod, sortOrder, options) {
-        return (0, exports.ExercisesApiFp)(this.configuration).getExercisesNameByName(name, offset, limit, sortMethod, sortOrder, options).then((request) => request(this.axios, this.basePath));
+        return (0, exports.ExercisesApiFp)(this.configuration)
+            .getExercisesNameByName(name, offset, limit, sortMethod, sortOrder, options)
+            .then((request) => request(this.axios, this.basePath));
     }
     /**
      * Get list of exercises by target muscle
@@ -706,7 +778,9 @@ class ExercisesApi extends base_1.BaseAPI {
      * @memberof ExercisesApi
      */
     getExercisesTargetByTarget(target, offset, limit, sortMethod, sortOrder, options) {
-        return (0, exports.ExercisesApiFp)(this.configuration).getExercisesTargetByTarget(target, offset, limit, sortMethod, sortOrder, options).then((request) => request(this.axios, this.basePath));
+        return (0, exports.ExercisesApiFp)(this.configuration)
+            .getExercisesTargetByTarget(target, offset, limit, sortMethod, sortOrder, options)
+            .then((request) => request(this.axios, this.basePath));
     }
     /**
      * Get list of available target muscles
@@ -715,7 +789,9 @@ class ExercisesApi extends base_1.BaseAPI {
      * @memberof ExercisesApi
      */
     getExercisesTargetList(options) {
-        return (0, exports.ExercisesApiFp)(this.configuration).getExercisesTargetList(options).then((request) => request(this.axios, this.basePath));
+        return (0, exports.ExercisesApiFp)(this.configuration)
+            .getExercisesTargetList(options)
+            .then((request) => request(this.axios, this.basePath));
     }
 }
 exports.ExercisesApi = ExercisesApi;
@@ -731,34 +807,41 @@ const MiscApiAxiosParamCreator = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getImageById: (id_1, ...args_1) => __awaiter(this, [id_1, ...args_1], void 0, function* (id, options = {}) {
+        getImageById: async (id, options = {}) => {
             // verify required parameter 'id' is not null or undefined
-            (0, common_1.assertParamExists)('getImageById', 'id', id);
-            const localVarPath = `/image/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            (0, common_1.assertParamExists)("getImageById", "id", id);
+            const localVarPath = `/image/{id}`.replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
             let baseOptions;
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = {
+                method: "GET",
+                ...baseOptions,
+                ...options,
+            };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             (0, common_1.setSearchParams)(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             return {
                 url: (0, common_1.toPathString)(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
         /**
          * Get the status of the ExerciseDB Server
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getStatus: (...args_1) => __awaiter(this, [...args_1], void 0, function* (options = {}) {
+        getStatus: async (options = {}) => {
             const localVarPath = `/status`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, common_1.DUMMY_BASE_URL);
@@ -766,17 +849,25 @@ const MiscApiAxiosParamCreator = function (configuration) {
             if (configuration) {
                 baseOptions = configuration.baseOptions;
             }
-            const localVarRequestOptions = Object.assign(Object.assign({ method: 'GET' }, baseOptions), options);
+            const localVarRequestOptions = {
+                method: "GET",
+                ...baseOptions,
+                ...options,
+            };
             const localVarHeaderParameter = {};
             const localVarQueryParameter = {};
             (0, common_1.setSearchParams)(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = Object.assign(Object.assign(Object.assign({}, localVarHeaderParameter), headersFromBaseOptions), options.headers);
+            localVarRequestOptions.headers = {
+                ...localVarHeaderParameter,
+                ...headersFromBaseOptions,
+                ...options.headers,
+            };
             return {
                 url: (0, common_1.toPathString)(localVarUrlObj),
                 options: localVarRequestOptions,
             };
-        }),
+        },
     };
 };
 exports.MiscApiAxiosParamCreator = MiscApiAxiosParamCreator;
@@ -793,22 +884,18 @@ const MiscApiFp = function (configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getImageById(id, options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.getImageById(id, options);
-                return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async getImageById(id, options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getImageById(id, options);
+            return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
         },
         /**
          * Get the status of the ExerciseDB Server
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getStatus(options) {
-            return __awaiter(this, void 0, void 0, function* () {
-                const localVarAxiosArgs = yield localVarAxiosParamCreator.getStatus(options);
-                return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
-            });
+        async getStatus(options) {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getStatus(options);
+            return (0, common_1.createRequestFunction)(localVarAxiosArgs, axios_1.default, base_1.BASE_PATH, configuration);
         },
     };
 };
@@ -827,7 +914,9 @@ const MiscApiFactory = function (configuration, basePath, axios) {
          * @throws {RequiredError}
          */
         getImageById(id, options) {
-            return localVarFp.getImageById(id, options).then((request) => request(axios, basePath));
+            return localVarFp
+                .getImageById(id, options)
+                .then((request) => request(axios, basePath));
         },
         /**
          * Get the status of the ExerciseDB Server
@@ -835,7 +924,9 @@ const MiscApiFactory = function (configuration, basePath, axios) {
          * @throws {RequiredError}
          */
         getStatus(options) {
-            return localVarFp.getStatus(options).then((request) => request(axios, basePath));
+            return localVarFp
+                .getStatus(options)
+                .then((request) => request(axios, basePath));
         },
     };
 };
@@ -855,7 +946,9 @@ class MiscApi extends base_1.BaseAPI {
      * @memberof MiscApi
      */
     getImageById(id, options) {
-        return (0, exports.MiscApiFp)(this.configuration).getImageById(id, options).then((request) => request(this.axios, this.basePath));
+        return (0, exports.MiscApiFp)(this.configuration)
+            .getImageById(id, options)
+            .then((request) => request(this.axios, this.basePath));
     }
     /**
      * Get the status of the ExerciseDB Server
@@ -864,7 +957,9 @@ class MiscApi extends base_1.BaseAPI {
      * @memberof MiscApi
      */
     getStatus(options) {
-        return (0, exports.MiscApiFp)(this.configuration).getStatus(options).then((request) => request(this.axios, this.basePath));
+        return (0, exports.MiscApiFp)(this.configuration)
+            .getStatus(options)
+            .then((request) => request(this.axios, this.basePath));
     }
 }
 exports.MiscApi = MiscApi;

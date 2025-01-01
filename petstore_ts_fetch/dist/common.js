@@ -12,15 +12,6 @@
  * https://openapi-generator.tech
  * Do not edit the class manually.
  */
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createRequestFunction = exports.toPathString = exports.serializeDataIfNeeded = exports.setSearchParams = exports.setOAuthToObject = exports.setBearerAuthToObject = exports.setBasicAuthToObject = exports.setApiKeyToObject = exports.assertParamExists = exports.DUMMY_BASE_URL = void 0;
 const base_1 = require("./base");
@@ -28,7 +19,7 @@ const base_1 = require("./base");
  *
  * @export
  */
-exports.DUMMY_BASE_URL = 'https://example.com';
+exports.DUMMY_BASE_URL = "https://example.com";
 /**
  *
  * @throws {RequiredError}
@@ -44,15 +35,13 @@ exports.assertParamExists = assertParamExists;
  *
  * @export
  */
-const setApiKeyToObject = function (object, keyParamName, configuration) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (configuration && configuration.apiKey) {
-            const localVarApiKeyValue = typeof configuration.apiKey === 'function'
-                ? yield configuration.apiKey(keyParamName)
-                : yield configuration.apiKey;
-            object[keyParamName] = localVarApiKeyValue;
-        }
-    });
+const setApiKeyToObject = async function (object, keyParamName, configuration) {
+    if (configuration && configuration.apiKey) {
+        const localVarApiKeyValue = typeof configuration.apiKey === "function"
+            ? await configuration.apiKey(keyParamName)
+            : await configuration.apiKey;
+        object[keyParamName] = localVarApiKeyValue;
+    }
 };
 exports.setApiKeyToObject = setApiKeyToObject;
 /**
@@ -61,7 +50,10 @@ exports.setApiKeyToObject = setApiKeyToObject;
  */
 const setBasicAuthToObject = function (object, configuration) {
     if (configuration && (configuration.username || configuration.password)) {
-        object["auth"] = { username: configuration.username, password: configuration.password };
+        object["auth"] = {
+            username: configuration.username,
+            password: configuration.password,
+        };
     }
 };
 exports.setBasicAuthToObject = setBasicAuthToObject;
@@ -69,39 +61,35 @@ exports.setBasicAuthToObject = setBasicAuthToObject;
  *
  * @export
  */
-const setBearerAuthToObject = function (object, configuration) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (configuration && configuration.accessToken) {
-            const accessToken = typeof configuration.accessToken === 'function'
-                ? yield configuration.accessToken()
-                : yield configuration.accessToken;
-            object["Authorization"] = "Bearer " + accessToken;
-        }
-    });
+const setBearerAuthToObject = async function (object, configuration) {
+    if (configuration && configuration.accessToken) {
+        const accessToken = typeof configuration.accessToken === "function"
+            ? await configuration.accessToken()
+            : await configuration.accessToken;
+        object["Authorization"] = "Bearer " + accessToken;
+    }
 };
 exports.setBearerAuthToObject = setBearerAuthToObject;
 /**
  *
  * @export
  */
-const setOAuthToObject = function (object, name, scopes, configuration) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (configuration && configuration.accessToken) {
-            const localVarAccessTokenValue = typeof configuration.accessToken === 'function'
-                ? yield configuration.accessToken(name, scopes)
-                : yield configuration.accessToken;
-            object["Authorization"] = "Bearer " + localVarAccessTokenValue;
-        }
-    });
+const setOAuthToObject = async function (object, name, scopes, configuration) {
+    if (configuration && configuration.accessToken) {
+        const localVarAccessTokenValue = typeof configuration.accessToken === "function"
+            ? await configuration.accessToken(name, scopes)
+            : await configuration.accessToken;
+        object["Authorization"] = "Bearer " + localVarAccessTokenValue;
+    }
 };
 exports.setOAuthToObject = setOAuthToObject;
 function setFlattenedQueryParams(urlSearchParams, parameter, key = "") {
     if (typeof parameter === "object") {
         if (Array.isArray(parameter)) {
-            parameter.forEach(item => setFlattenedQueryParams(urlSearchParams, item, key));
+            parameter.forEach((item) => setFlattenedQueryParams(urlSearchParams, item, key));
         }
         else {
-            Object.keys(parameter).forEach(currentKey => setFlattenedQueryParams(urlSearchParams, parameter[currentKey], `${key}${key !== '' ? '.' : ''}${currentKey}`));
+            Object.keys(parameter).forEach((currentKey) => setFlattenedQueryParams(urlSearchParams, parameter[currentKey], `${key}${key !== "" ? "." : ""}${currentKey}`));
         }
     }
     else {
@@ -128,13 +116,13 @@ exports.setSearchParams = setSearchParams;
  * @export
  */
 const serializeDataIfNeeded = function (value, requestOptions, configuration) {
-    const nonString = typeof value !== 'string';
+    const nonString = typeof value !== "string";
     const needsSerialization = nonString && configuration && configuration.isJsonMime
-        ? configuration.isJsonMime(requestOptions.headers['Content-Type'])
+        ? configuration.isJsonMime(requestOptions.headers["Content-Type"])
         : nonString;
     return needsSerialization
         ? JSON.stringify(value !== undefined ? value : {})
-        : (value || "");
+        : value || "";
 };
 exports.serializeDataIfNeeded = serializeDataIfNeeded;
 /**
@@ -151,7 +139,10 @@ exports.toPathString = toPathString;
  */
 const createRequestFunction = function (axiosArgs, globalAxios, BASE_PATH, configuration) {
     return (axios = globalAxios, basePath = BASE_PATH) => {
-        const axiosRequestArgs = Object.assign(Object.assign({}, axiosArgs.options), { url: ((configuration === null || configuration === void 0 ? void 0 : configuration.basePath) || basePath) + axiosArgs.url });
+        const axiosRequestArgs = {
+            ...axiosArgs.options,
+            url: (configuration?.basePath || basePath) + axiosArgs.url,
+        };
         return axios.request(axiosRequestArgs);
     };
 };
