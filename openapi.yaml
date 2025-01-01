@@ -1,0 +1,462 @@
+openapi: 3.0.3
+servers:
+  - url: https://exercisedb.p.rapidapi.com
+info:
+  title: ExerciseDB Documentation
+  description: API documentation app for [ExerciseDB on RapidAPI](https://rapidapi.com/justin-WFnsXH_t6/api/exercisedb)
+  version: 2.1.0
+  contact:
+    url: https://rapidapi.com/justin-WFnsXH_t6/api/exercisedb
+
+tags:
+  - name: Exercises
+    description: |
+      Exercise endpoints.
+
+      Security headers are required for each request which are detailed below.
+
+      **Security Headers:**
+
+      ```
+      x-raipidapi-key: <key>
+      x-raipidapi-host: <host>
+      ```
+
+      [RapidAPI Key Documentation](https://docs.rapidapi.com/docs/keys-and-key-rotation)
+  - name: Misc
+    description: Miscellaneous endpoints
+
+components:
+  schemas:
+    Exercise:
+      type: object
+      properties:
+        bodyPart:
+          type: string
+        equipment:
+          type: string
+        gifUrl:
+          type: string
+        id:
+          type: string
+        name:
+          type: string
+        target:
+          type: string
+        secondaryMuscles:
+          type: array
+          items:
+            type: string
+        instructions:
+          type: array
+          items:
+            type: string
+      required:
+        - bodyPart
+        - equipment
+        - gifUrl
+        - id
+        - name
+        - target
+        - secondaryMuscles
+        - instructions
+
+    Error:
+      type: object
+      properties:
+        code:
+          type: string
+        message:
+          type: string
+      required:
+        - code
+        - message
+
+    NotFoundError:
+      type: object
+      properties:
+        code:
+          type: string
+          enum: ["NOT_FOUND"]
+        message:
+          type: string
+          enum: ["Exercise not found"]
+      required:
+        - code
+        - message
+
+  parameters:
+    offset:
+      name: offset
+      in: query
+      description: Offset for exercise list pagination
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+      required: false
+
+    limit:
+      name: limit
+      in: query
+      description: Limit number of exercises included in the list. Set `limit=0` to return full list
+      schema:
+        type: integer
+        default: 10
+        minimum: 0
+      required: false
+
+    sortMethod:
+      name: sortMethod
+      in: query
+      description: Sort exercise list by one of available fields
+      schema:
+        type: string
+        enum: [bodyPart, equipment, id, name, target]
+        default: id
+      required: false
+
+    sortOrder:
+      name: sortOrder
+      in: query
+      description: Sort order direction
+      schema:
+        type: string
+        enum: [ascending, descending]
+        default: ascending
+      required: false
+
+  responses:
+    Error500:
+      description: Internal server error
+      content:
+        application/json:
+          schema:
+            type: string
+            example: Internal server error
+
+paths:
+  /status:
+    get:
+      operationId: getStatus
+      description: Get the status of the ExerciseDB Server
+      tags:
+        - Misc
+      responses:
+        "200":
+          description: Server is running
+
+  /image/{id}:
+    get:
+      operationId: getImageById
+      description: Retrieve an exercise gif from the exercise ID
+      tags:
+        - Misc
+      parameters:
+        - name: id
+          in: path
+          required: true
+          description: The ID of the exercise
+          schema:
+            type: string
+            minLength: 14
+            maxLength: 14
+      responses:
+        "200":
+          description: Exercise GIF image
+          content:
+            image/gif:
+              schema:
+                type: string
+                format: binary
+        "404":
+          description: Image not found
+          content:
+            application/json:
+              schema:
+                type: string
+                enum: ["Url not found or expired"]
+        "500":
+          $ref: "#/components/responses/Error500"
+
+  /exercises:
+    get:
+      operationId: getExercises
+      description: Get list of exercises
+      tags:
+        - Exercises
+      parameters:
+        - $ref: "#/components/parameters/offset"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/sortMethod"
+        - $ref: "#/components/parameters/sortOrder"
+      responses:
+        "200":
+          description: List of exercises
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Exercise"
+        "500":
+          $ref: "#/components/responses/Error500"
+
+  /exercises/bodyPartList:
+    get:
+      operationId: getExercisesBodyPartList
+      description: Get list of available body parts
+      tags:
+        - Exercises
+      responses:
+        "200":
+          description: List of body parts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        "500":
+          $ref: "#/components/responses/Error500"
+
+  /exercises/targetList:
+    get:
+      operationId: getExercisesTargetList
+      description: Get list of available target muscles
+      tags:
+        - Exercises
+      responses:
+        "200":
+          description: List of target muscles
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        "500":
+          $ref: "#/components/responses/Error500"
+
+  /exercises/equipmentList:
+    get:
+      operationId: getExercisesEquipmentList
+      description: Get list of available equipment
+      tags:
+        - Exercises
+      responses:
+        "200":
+          description: List of equipment
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        "500":
+          $ref: "#/components/responses/Error500"
+
+  /exercises/exercise/{id}:
+    get:
+      operationId: getExercisesExerciseById
+      description: Get a single exercise by its ID
+      tags:
+        - Exercises
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            minLength: 4
+            maxLength: 4
+      responses:
+        "200":
+          description: Exercise details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Exercise"
+        "422":
+          description: Exercise not found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/NotFoundError"
+        "500":
+          $ref: "#/components/responses/Error500"
+
+  /exercises/name/{name}:
+    get:
+      operationId: getExercisesNameByName
+      description: Get list of exercises by name
+      tags:
+        - Exercises
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: "#/components/parameters/offset"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/sortMethod"
+        - $ref: "#/components/parameters/sortOrder"
+      responses:
+        "200":
+          description: List of exercises matching the name
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Exercise"
+        "500":
+          $ref: "#/components/responses/Error500"
+
+  /exercises/equipment/{equipment}:
+    get:
+      operationId: getExercisesEquipmentByEquipment
+      description: Retrieve a list of exercises by equipment
+      tags:
+        - Exercises
+      parameters:
+        - name: equipment
+          in: path
+          required: true
+          description: Equipment type
+          schema:
+            type: string
+            enum:
+              - assisted
+              - band
+              - barbell
+              - body weight
+              - bosu ball
+              - cable
+              - dumbbell
+              - elliptical machine
+              - ez barbell
+              - hammer
+              - kettlebell
+              - leverage machine
+              - medicine ball
+              - olympic barbell
+              - resistance band
+              - roller
+              - rope
+              - skierg machine
+              - sled machine
+              - smith machine
+              - stability ball
+              - stationary bike
+              - stepmill machine
+              - tire
+              - trap bar
+              - upper body ergometer
+              - weighted
+              - wheel roller
+        - $ref: "#/components/parameters/offset"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/sortMethod"
+        - $ref: "#/components/parameters/sortOrder"
+      responses:
+        "200":
+          description: List of exercises by equipment
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Exercise"
+        "500":
+          $ref: "#/components/responses/Error500"
+
+  /exercises/bodyPart/{bodyPart}:
+    get:
+      operationId: getExercisesBodyPartByBodyPart
+      description: Retrieve a list of exercises by body part
+      tags:
+        - Exercises
+      parameters:
+        - name: bodyPart
+          in: path
+          required: true
+          description: Body part
+          schema:
+            type: string
+            enum:
+              - back
+              - cardio
+              - chest
+              - lower arms
+              - lower legs
+              - neck
+              - shoulders
+              - upper arms
+              - upper legs
+              - waist
+        - $ref: "#/components/parameters/offset"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/sortMethod"
+        - $ref: "#/components/parameters/sortOrder"
+      responses:
+        "200":
+          description: List of exercises by body part
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Exercise"
+        "500":
+          $ref: "#/components/responses/Error500"
+
+  /exercises/target/{target}:
+    get:
+      operationId: getExercisesTargetByTarget
+      description: Get list of exercises by target muscle
+      tags:
+        - Exercises
+      parameters:
+        - name: target
+          in: path
+          required: true
+          description: Target muscle
+          schema:
+            type: string
+            enum:
+              - abductors
+              - abs
+              - adductors
+              - biceps
+              - calves
+              - cardiovascular system
+              - delts
+              - forearms
+              - glutes
+              - hamstrings
+              - lats
+              - levator scapulae
+              - pectorals
+              - quads
+              - serratus anterior
+              - spine
+              - traps
+              - triceps
+              - upper back
+        - $ref: "#/components/parameters/offset"
+        - $ref: "#/components/parameters/limit"
+        - $ref: "#/components/parameters/sortMethod"
+        - $ref: "#/components/parameters/sortOrder"
+      responses:
+        "200":
+          description: List of exercises by target muscle
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Exercise"
+        "500":
+          $ref: "#/components/responses/Error500"
