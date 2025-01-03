@@ -1,5 +1,5 @@
 {
-  "name": "@fit-track/exercises-api",
+  "name": "@fit-track/exercises-sdk",
   "version": "1.0.7",
   "main": "dist/index.js",
   "scripts": {
